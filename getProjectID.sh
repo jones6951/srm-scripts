@@ -27,7 +27,7 @@ if [ -z "$project" ]; then
     exit 1
 fi
 
-projectID=$(curl -s -X 'GET' "$url/codedx/api/projects" -H 'accept: application/json' -H "API-Key: $apikey" |jq ".projects[] | select(.name==\"$project\").id")
+projectID=$(curl -k -s -X 'GET' "$url/codedx/api/projects" -H 'accept: application/json' -H "API-Key: $apikey" |jq ".projects[] | select(.name==\"$project\").id")
 if [ -z $projectID ]; then
     echo "Project not found"
     exit 1
