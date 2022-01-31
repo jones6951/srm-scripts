@@ -13,17 +13,17 @@ done
 
 if [ -z "$url" ]; then
     echo "You must specify a URL"
-    echo "Usage: getTPI.sh --url --apikey --project"
+    echo "Usage: getProjectID.sh --url --apikey --project"
     exit 1
 fi
 if [ -z "$apikey" ]; then
     echo "You must specify an API key"
-    echo "Usage: getTPI.sh --url --apikey --project"
+    echo "Usage: getProjectID.sh --url --apikey --project"
     exit 1
 fi
 if [ -z "$project" ]; then
     echo "You must specify a project"
-    echo "Usage: getTPI.sh --url --apikey --project"
+    echo "Usage: getProjectID.sh --url --apikey --project"
     exit 1
 fi
 
