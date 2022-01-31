@@ -50,4 +50,5 @@ if [ $workingDir ]; then
     cd -
 fi
 
-exit $serverPID
+echo $serverPID
+exit 0
