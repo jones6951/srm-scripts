@@ -36,9 +36,6 @@ fi
 output=$(mktemp /tmp/$project.XXX)
 sh -c "$startCmd" &>$output &
 serverPID=$!
-echo "Server pid: $serverPID"
-echo "Output: $output"
-echo "Wait:"
 
 until fgrep -q "$startedString" $output
 do
