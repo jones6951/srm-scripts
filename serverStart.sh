@@ -1,6 +1,11 @@
 #!/bin/bash
 
 # Copyright (c) 2022 Synopsys, Inc. All rights reserved worldwide.
+# Start the process specified in startCmd argument
+# Create a log file in /tmp
+# Watch the log for serverStarted string and return the PID of the running process
+# Note: Make sure you are specifying the correct string to search for. Note: Maven will add its own colour which
+# can cause the search string to not be found.
 
 wait_str() {
     local file="$1"; shift
@@ -38,7 +43,6 @@ for i in "$@"; do
         --startCmd=*) startCmd="${i#*=}" ;;
         --startedString=*) startedString="${i#*=}" ;;
         --project=*) project="${i#*=}" ;;
-        --workingDir=*) workingDir="${i#*=}" ;;
     esac
 done
 
@@ -68,17 +72,9 @@ do
     startOperands="$startOperands ${commandArray[n]}"
 done
 
-if [ $workingDir ]; then
-    cd $workingDir
-fi
-
 output=$(mktemp /tmp/$project.XXX)
 ($startOperation $startOperands >$output 2>/dev/null) &
 serverPID=$!
-
-if [ $workingDir ]; then
-    cd -
-fi
 
 if (! wait_server $output "$startedString" 60s); then
     echo "Could not start server"
