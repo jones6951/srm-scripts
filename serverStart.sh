@@ -29,12 +29,24 @@ if [ -z "$project" ]; then
     exit 1
 fi
 
+#Split $startCmd into operation and operands
+commandArray=($sentence)
+startOperation=$commandArray
+for (( n=1; n < ${#commandArray[*]}; n++))
+do
+    startOperands="$startOperands ${commandArray[n]}"
+done
+
+echo "Operation = $startOperation"
+echo "Operands = $startOperands"
+
+
 if [ $workingDir ]; then
     cd $workingDir
 fi
 
 output=$(mktemp /tmp/$project.XXX)
-sh -c "$startCmd" &>$output &
+($startOperation $startOperands >$output 2>/dev/null) &
 serverPID=$!
 
 wait_server "$output" "$startedString" 1m && \
