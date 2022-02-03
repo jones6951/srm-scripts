@@ -42,24 +42,32 @@ for i in "$@"; do
         --startCmd=*) startCmd="${i#*=}" ;;
         --startedString=*) startedString="${i#*=}" ;;
         --project=*) project="${i#*=}" ;;
+        --timeout=*) timeout="${i#*=}" ;;
+
     esac
 done
 
 if [ -z "$startCmd" ]; then
     echo "You must specify startCmd"
-    echo "Usage: serverStart.sh --startCmd=COMMAND_TO_START_SERVER --startedString=SERVER_STARTED_MESSAGE --project=PROJECT --workingDir=WORKING_DIR"
+    echo "Usage: serverStart.sh --startCmd=COMMAND_TO_START_SERVER --startedString=SERVER_STARTED_MESSAGE --project=PROJECT --timeout=TIMEOUT"
     exit 1
 fi
 
 if [ -z "$startedString" ]; then
     echo "You must specify startedString"
-    echo "Usage: serverStart.sh --startCmd=COMMAND_TO_START_SERVER --startedString=SERVER_STARTED_MESSAGE --project=PROJECT --workingDir=WORKING_DIR"
+    echo "Usage: serverStart.sh --startCmd=COMMAND_TO_START_SERVER --startedString=SERVER_STARTED_MESSAGE --project=PROJECT --timeout=TIMEOUT"
     exit 1
 fi
 
 if [ -z "$project" ]; then
     echo "You must specify project"
-    echo "Usage: serverStart.sh --startCmd=COMMAND_TO_START_SERVER --startedString=SERVER_STARTED_MESSAGE --project=PROJECT --workingDir=WORKING_DIR"
+    echo "Usage: serverStart.sh --startCmd=COMMAND_TO_START_SERVER --startedString=SERVER_STARTED_MESSAGE --project=PROJECT --timeout=TIMEOUT"
+    exit 1
+fi
+
+if [ -z "$timeout" ]; then
+    echo "You must specify a timeout"
+    echo "Usage: serverStart.sh --startCmd=COMMAND_TO_START_SERVER --startedString=SERVER_STARTED_MESSAGE --project=PROJECT --timeout=TIMEOUT"
     exit 1
 fi
 
@@ -75,7 +83,7 @@ output=$(mktemp /tmp/$project.XXX)
 ($startOperation $startOperands >$output 2>/dev/null) &
 serverPID=$!
 
-if (! wait_server $output "$startedString" 60s); then
+if (! wait_server $output "$startedString" $timeout); then
     echo "Could not start server"
     exit 1
 fi
