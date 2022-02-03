@@ -21,7 +21,7 @@ wait_server() {
 
     wait_file "$server_log" 10 || { echo "Server log file missing: '$server_log'"; return 1; }
 
-    wait_str "$server_log" "[INFO] Started Jetty Server" "$wait_time"
+    wait_str "$server_log" "Started Jetty Server" "$wait_time"
 }
 
 wait_file() {
@@ -80,9 +80,7 @@ if [ $workingDir ]; then
     cd -
 fi
 
-if (wait_server $output "$startedString", 60s); then
-    echo "Started Server on $serverPID"
-else
+if (! wait_server $output "$startedString" 60s); then
     echo "Could not start server"
     exit 1
 fi
