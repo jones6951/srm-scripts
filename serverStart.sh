@@ -2,62 +2,6 @@
 
 # Copyright (c) 2022 Synopsys, Inc. All rights reserved worldwide.
 
-for i in "$@"; do
-    case "$i" in
-        --startCmd=*) startCmd="${i#*=}" ;;
-        --startedString=*) startedString="${i#*=}" ;;
-        --project=*) project="${i#*=}" ;;
-        --workingDir=*) workingDir="${i#*=}" ;;
-    esac
-done
-
-if [ -z "$startCmd" ]; then
-    echo "You must specify startCmd"
-    echo "Usage: serverStart.sh --startCmd=COMMAND_TO_START_SERVER --startedString=SERVER_STARTED_MESSAGE --project=PROJECT --workingDir=WORKING_DIR"
-    exit 1
-fi
-
-if [ -z "$startedString" ]; then
-    echo "You must specify startedString"
-    echo "Usage: serverStart.sh --startCmd=COMMAND_TO_START_SERVER --startedString=SERVER_STARTED_MESSAGE --project=PROJECT --workingDir=WORKING_DIR"
-    exit 1
-fi
-
-if [ -z "$project" ]; then
-    echo "You must specify project"
-    echo "Usage: serverStart.sh --startCmd=COMMAND_TO_START_SERVER --startedString=SERVER_STARTED_MESSAGE --project=PROJECT --workingDir=WORKING_DIR"
-    exit 1
-fi
-
-#Split $startCmd into operation and operands
-commandArray=($sentence)
-startOperation=$commandArray
-for (( n=1; n < ${#commandArray[*]}; n++))
-do
-    startOperands="$startOperands ${commandArray[n]}"
-done
-
-echo "Operation = $startOperation"
-echo "Operands = $startOperands"
-
-
-if [ $workingDir ]; then
-    cd $workingDir
-fi
-
-output=$(mktemp /tmp/$project.XXX)
-($startOperation $startOperands >$output 2>/dev/null) &
-serverPID=$!
-
-wait_server "$output" "$startedString" 1m && \
-echo -e "\n-------------------------- Server READY --------------------------\n"
-
-if [ $workingDir ]; then
-    cd -
-fi
-
-echo $serverPID
-
 wait_str() {
     local file="$1"; shift
     local search_term="$1"; shift
@@ -89,4 +33,60 @@ wait_file() {
     ((++wait_seconds))
 }
 
+for i in "$@"; do
+    case "$i" in
+        --startCmd=*) startCmd="${i#*=}" ;;
+        --startedString=*) startedString="${i#*=}" ;;
+        --project=*) project="${i#*=}" ;;
+        --workingDir=*) workingDir="${i#*=}" ;;
+    esac
+done
+
+if [ -z "$startCmd" ]; then
+    echo "You must specify startCmd"
+    echo "Usage: serverStart.sh --startCmd=COMMAND_TO_START_SERVER --startedString=SERVER_STARTED_MESSAGE --project=PROJECT --workingDir=WORKING_DIR"
+    exit 1
+fi
+
+if [ -z "$startedString" ]; then
+    echo "You must specify startedString"
+    echo "Usage: serverStart.sh --startCmd=COMMAND_TO_START_SERVER --startedString=SERVER_STARTED_MESSAGE --project=PROJECT --workingDir=WORKING_DIR"
+    exit 1
+fi
+
+if [ -z "$project" ]; then
+    echo "You must specify project"
+    echo "Usage: serverStart.sh --startCmd=COMMAND_TO_START_SERVER --startedString=SERVER_STARTED_MESSAGE --project=PROJECT --workingDir=WORKING_DIR"
+    exit 1
+fi
+
+#Split $startCmd into operation and operands
+commandArray=($startCmd)
+startOperation=$commandArray
+for (( n=1; n < ${#commandArray[*]}; n++))
+do
+    startOperands="$startOperands ${commandArray[n]}"
+done
+
+if [ $workingDir ]; then
+    cd $workingDir
+fi
+
+output=$(mktemp /tmp/$project.XXX)
+($startOperation $startOperands >$output 2>/dev/null) &
+serverPID=$!
+
+if [ $workingDir ]; then
+    cd -
+fi
+
+if (wait_server $output "$startedString", 60s); then
+    echo "Started Server on $serverPID"
+else
+    echo "Could not start server"
+    exit 1
+fi
+
+echo $serverPID
 exit 0
+
