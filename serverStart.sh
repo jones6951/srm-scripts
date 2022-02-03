@@ -19,7 +19,6 @@ wait_str() {
 }
 
 wait_server() {
-    echo "Waiting for server..."
     local server_log="$1"; shift
     local started_text="$1"; shift
     local wait_time="$1"; shift
