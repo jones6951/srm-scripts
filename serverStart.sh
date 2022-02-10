@@ -80,7 +80,7 @@ do
 done
 
 output=$(mktemp /tmp/$project.XXX)
-($startOperation $startOperands >$output 2>/dev/null) &
+($startOperation $startOperands >$output 2>$output) &
 serverPID=$!
 
 if (! wait_server $output "$startedString" $timeout); then
