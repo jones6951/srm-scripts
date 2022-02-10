@@ -25,7 +25,7 @@ wait_server() {
 
     wait_file "$server_log" 10 || { echo "Server log file missing: '$server_log'"; return 1; }
 
-    wait_str "$server_log" "Started Jetty Server" "$wait_time"
+    wait_str "$server_log" "$started_text" "$wait_time"
 }
 
 wait_file() {
