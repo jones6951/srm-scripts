@@ -42,9 +42,9 @@ fi
 
 branchID=$(curl -k -s -X 'GET' "$url/codedx/x/projects/$projectID/branches" -H 'accept: application/json' -H "API-Key: $apikey" |jq ".[].id")
 
-policyStatus=$(curl -k -s -X 'GET' "$url/codedx/api/projects/$projectID;branchId=$branchID/policies/$policy" -H 'accept: application/json' -H "API-Key: $apikey")
+policyStatus=$(curl -k -s -X 'GET' "$url/codedx/api/projects/$projectID;branchId=$branchID/policies/$policy/build-broken" -H 'accept: application/json' -H "API-Key: $apikey")
 if [ -z $projectID ]; then
-    echo "Polict not found"
+    echo "Policy not found"
     exit 1
 fi
 
