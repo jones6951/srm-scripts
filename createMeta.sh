@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Copyright (c) 2021 Synopsys, Inc. All rights reserved worldwide.
+# Copyright (c) 2025 Black Duck Software. All rights reserved worldwide.
 
 for i in "$@"; do
     case "$i" in
@@ -40,7 +40,7 @@ metadata='[{
   ]
 }]'
 
-result=$(curl -s -X 'POST' "$url/codedx/api/project-fields" -H 'accept: application/json' -H "API-Key: $token" -H 'Content-Type: application/json' -d "$metadata")
+result=$(curl -s -X 'POST' "$url/srm/api/project-fields" -H 'accept: application/json' -H "API-Key: $token" -H 'Content-Type: application/json' -d "$metadata")
 echo "Result = [$result]"
 
 metadata='[
@@ -59,7 +59,7 @@ metadata='[
     ]
   }
 ]'
-result=$(curl -s -X 'POST' "$url/codedx/api/project-fields" -H 'accept: application/json' -H "API-Key: $token" -H 'Content-Type: application/json' -d "$metadata")
+result=$(curl -s -X 'POST' "$url/srm/api/project-fields" -H 'accept: application/json' -H "API-Key: $token" -H 'Content-Type: application/json' -d "$metadata")
 echo "Result = [$result]"
 
 metadata='[
@@ -79,7 +79,7 @@ metadata='[
   }
 ]'
 
-result=$(curl -s -X 'POST' "$url/codedx/api/project-fields" -H 'accept: application/json' -H "API-Key: $token" -H 'Content-Type: application/json' -d "$metadata")
+result=$(curl -s -X 'POST' "$url/srm/api/project-fields" -H 'accept: application/json' -H "API-Key: $token" -H 'Content-Type: application/json' -d "$metadata")
 echo "Result = [$result]"
 
 metadata='[
@@ -99,7 +99,7 @@ metadata='[
   }
 ]'
 
-result=$(curl -s -X 'POST' "$url/codedx/api/project-fields" -H 'accept: application/json' -H "API-Key: $token" -H 'Content-Type: application/json' -d "$metadata")
+result=$(curl -s -X 'POST' "$url/srm/api/project-fields" -H 'accept: application/json' -H "API-Key: $token" -H 'Content-Type: application/json' -d "$metadata")
 echo "Result = [$result]"
 
 metadata='[
@@ -119,7 +119,7 @@ metadata='[
   }
 ]'
 
-result=$(curl -s -X 'POST' "$url/codedx/api/project-fields" -H 'accept: application/json' -H "API-Key: $token" -H 'Content-Type: application/json' -d "$metadata")
+result=$(curl -s -X 'POST' "$url/srm/api/project-fields" -H 'accept: application/json' -H "API-Key: $token" -H 'Content-Type: application/json' -d "$metadata")
 echo "Result = [$result]"
 
 metadata='[
@@ -147,7 +147,7 @@ metadata='[
   }
 ]'
 
-result=$(curl -s -X 'POST' "$url/codedx/api/project-fields" -H 'accept: application/json' -H "API-Key: $token" -H 'Content-Type: application/json' -d "$metadata")
+result=$(curl -s -X 'POST' "$url/srm/api/project-fields" -H 'accept: application/json' -H "API-Key: $token" -H 'Content-Type: application/json' -d "$metadata")
 echo "Result = [$result]"
 
 metadata='[
@@ -167,7 +167,7 @@ metadata='[
   }
 ]'
 
-result=$(curl -s -X 'POST' "$url/codedx/api/project-fields" -H 'accept: application/json' -H "API-Key: $token" -H 'Content-Type: application/json' -d "$metadata")
+result=$(curl -s -X 'POST' "$url/srm/api/project-fields" -H 'accept: application/json' -H "API-Key: $token" -H 'Content-Type: application/json' -d "$metadata")
 echo "Result = [$result]"
 
 metadata='[
@@ -187,7 +187,7 @@ metadata='[
   }
 ]'
 
-result=$(curl -s -X 'POST' "$url/codedx/api/project-fields" -H 'accept: application/json' -H "API-Key: $token" -H 'Content-Type: application/json' -d "$metadata")
+result=$(curl -s -X 'POST' "$url/srm/api/project-fields" -H 'accept: application/json' -H "API-Key: $token" -H 'Content-Type: application/json' -d "$metadata")
 echo "Result = [$result]"
 
 metadata='[
@@ -211,7 +211,7 @@ metadata='[
   }
 ]'
 
-result=$(curl -s -X 'POST' "$url/codedx/api/project-fields" -H 'accept: application/json' -H "API-Key: $token" -H 'Content-Type: application/json' -d "$metadata")
+result=$(curl -s -X 'POST' "$url/srm/api/project-fields" -H 'accept: application/json' -H "API-Key: $token" -H 'Content-Type: application/json' -d "$metadata")
 echo "Result = [$result]"
 
 metadata='[
@@ -231,7 +231,7 @@ metadata='[
   }
 ]'
 
-result=$(curl -s -X 'POST' "$url/codedx/api/project-fields" -H 'accept: application/json' -H "API-Key: $token" -H 'Content-Type: application/json' -d "$metadata")
+result=$(curl -s -X 'POST' "$url/srm/api/project-fields" -H 'accept: application/json' -H "API-Key: $token" -H 'Content-Type: application/json' -d "$metadata")
 echo "Result = [$result]"
 
 exit 0

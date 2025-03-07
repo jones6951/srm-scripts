@@ -1,6 +1,7 @@
 #!/bin/bash
 
-# Copyright (c) 2022 Synopsys, Inc. All rights reserved worldwide.
+# Copyright (c) 2025 Black Duck Software. All rights reserved worldwide.
+
 # Start the process specified in startCmd argument
 # Create a log file in /tmp
 # Watch the log for serverStarted string and return the PID of the running process

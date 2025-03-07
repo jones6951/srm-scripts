@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Copyright (c) 2023 Synopsys, Inc. All rights reserved worldwide.
+# Copyright (c) 2025 Black Duck Software. All rights reserved worldwide.
 
 for i in "$@"; do
     case "$i" in
@@ -37,19 +37,19 @@ fi
 if [ -z "$policy" ]; then
     policyID=any
 else
-    policyID=$(curl -k -s -X 'GET' "$url/codedx/x/policies" -H 'accept: application/json' -H "API-Key: $apikey"| jq ".[] | select(.name==\"$policy\").id")
+    policyID=$(curl -k -s -X 'GET' "$url/srm/x/policies" -H 'accept: application/json' -H "API-Key: $apikey"| jq ".[] | select(.name==\"$policy\").id")
     if [ -z $policyID ]; then
         echo "Policy not found"
         exit 1
     fi
 fi
 
-projectID=$(curl -k -s -X 'GET' "$url/codedx/api/projects" -H 'accept: application/json' -H "API-Key: $apikey" |jq ".projects[] | select(.name==\"$project\").id")
+projectID=$(curl -k -s -X 'GET' "$url/srm/api/projects" -H 'accept: application/json' -H "API-Key: $apikey" |jq ".projects[] | select(.name==\"$project\").id")
 if [ -z $projectID ]; then
     echo "Project not found"
     exit 1
 fi
-policyStatus=$(curl -k -s -X 'GET' "$url/codedx/x/projects/$projectID;branch=$branch/policies/$policyID/build-broken" -H 'accept: application/json' -H "API-Key: $apikey")
+policyStatus=$(curl -k -s -X 'GET' "$url/srm/x/projects/$projectID;branch=$branch/policies/$policyID/build-broken" -H 'accept: application/json' -H "API-Key: $apikey")
 if [ -z $policyStatus ]; then
     echo "Error"
     exit 1

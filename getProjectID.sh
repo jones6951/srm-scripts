@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Copyright (c) 2021 Synopsys, Inc. All rights reserved worldwide.
+# Copyright (c) 2025 Black Duck Software. All rights reserved worldwide.
 
 for i in "$@"; do
     case "$i" in
@@ -27,7 +27,7 @@ if [ -z "$project" ]; then
     exit 1
 fi
 
-projectID=$(curl -k -s -X 'GET' "$url/codedx/api/projects" -H 'accept: application/json' -H "API-Key: $apikey" |jq ".projects[] | select(.name==\"$project\").id")
+projectID=$(curl -k -s -X 'GET' "$url/srm/api/projects" -H 'accept: application/json' -H "API-Key: $apikey" |jq ".projects[] | select(.name==\"$project\").id")
 if [ -z $projectID ]; then
     echo "Project not found"
     exit 1

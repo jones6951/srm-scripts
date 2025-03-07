@@ -1,4 +1,6 @@
-Useful IO scripts
+Useful Software Risk Manager scripts
 
-createMeta.sh - create Code Dx metadata fields for use with IO
-getTPI.sh - get TPI metadata from Code Dx
+runAnalysis - initiate an SRM analysis and verify if build should be broken
+createMeta.sh - create SRM metadata fields 
+getTPI.sh - get TPI metadata from SRM
+
