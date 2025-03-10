@@ -3,6 +3,15 @@
 # Copyright (c) 2025 Black Duck Software. All rights reserved worldwide.
 # Requires jq to be installed.  https://stedolan.github.io/jq/
 
+# Required parameters:
+# --url=YOUR_SRM_SERVER
+# --apikey=YOUR_API_KEY
+# --project=YOUR_PROJECT
+# --branch=YOUR_BRANCH [optional. If not specified, get the default branch for the project]
+#
+# e.g.
+# ./runAnalysis.sh --url=http://MY_SERVER --apikey=api-key:xxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx --project=TestProject --branch=TestBranch
+ ✔ 
 for i in "$@"; do
     case "$i" in
     --url=*) url="${i#*=}" ;;
@@ -13,6 +22,7 @@ for i in "$@"; do
     esac
 done
 
+# Check if required arguments are present
 if [ -z "$url" ]; then
     echo "You must specify a URL"
     echo "Usage: runAnalysis.sh --url --apikey --project --branch"
@@ -29,17 +39,19 @@ if [ -z "$project" ]; then
     exit 1
 fi
 
+# Check Project exists and get Project ID
 projectID=$(curl -k -s -X 'GET' "$url/srm/api/projects" -H 'accept: application/json' -H "API-Key: $apikey" |jq ".projects[] | select(.name==\"$project\").id")
 if [ -z $projectID ]; then
     echo "Project not found"
     exit 1
 fi
 
+# If branch not specified, get the default branch for the project
 if [ -z "$branch" ]; then
-#   Get the default branch
     branch=$(curl -k -s -X 'GET' "$url/srm/x/projects/$projectID/branches/default" -H 'accept: application/json' -H "API-Key: $apikey" | jq -r ".name")
 fi
 
+# Check Branch exists
 branchID=$(curl -k -s -X 'GET' "$url/srm/x/projects/$projectID/branches" -H 'accept: application/json' -H "API-Key: $apikey" | jq ".[] | select(.name==\"$branch\").id")
 if [ -z $branchID ]; then
     echo "Branch not found"
