@@ -11,7 +11,7 @@
 #
 # e.g.
 # ./runAnalysis.sh --url=http://MY_SERVER --apikey=api-key:xxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx --project=TestProject --branch=TestBranch
- ✔ 
+
 for i in "$@"; do
     case "$i" in
     --url=*) url="${i#*=}" ;;
